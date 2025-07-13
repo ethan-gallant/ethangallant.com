@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ethan Gallant</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Nav bar with name -->
+      <nav id="navbar">
+        <h1>Ethan Gallant</h1>
+      </nav>
+      <main id="main-content">
+        <aside id="profile-bar">
+          <img id="profile-pic" src="/me.webp" alt="picture of ethan gallant"/>
+          <h2>Ethan Gallant</h2>
+        </aside>
+      </main>
+      <!-- Main content below nav     -->
+
+
+      <main class="text-content">
+        <h1>About Me</h1>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+
+<style lang="sass">
+  :root {
+    font-family: Garamond, serif;
+  }
+
+  #navbar {
+    display: flex;
+    background-color: aquamarine;
+    justify-content: center;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+  }
+
+  #app {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  #profile-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: burlywood;
+    width: 20vw;
+  }
+
+  #profile-pic {
+    border-radius: 50%;
+    width: 60%;
+    object-fit: cover;
+  }
+
+  #main-content{
+    background-color: cornsilk;
+    display: flex;
+    flex-direction: row;
+  }
+</style>
