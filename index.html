@@ -1,74 +1,404 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+
     <title>Ethan Gallant</title>
-  </head>
-  <body>
-    <div id="app">
-      <!-- Nav bar with name -->
-      <nav id="navbar">
-        <h1>Ethan Gallant</h1>
-      </nav>
-      <main id="main-content">
-        <aside id="profile-bar">
-          <img id="profile-pic" src="/me.webp" alt="picture of ethan gallant"/>
-          <h2>Ethan Gallant</h2>
-        </aside>
-      </main>
-      <!-- Main content below nav     -->
+    <style lang="scss">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f6f7f9;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .header {
+            white-space: nowrap;
+            background: white;
+            padding: 1vh 5vw;
+            border-bottom: 1px solid #e1e4e8;
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            position: sticky;
+            top: 0; /* Sticky header */
+            z-index: 100;
+            height: 8vh;
+            width: 100%;
+        }
+
+        /* Used for smooth scrolling, needs to match header height */
+        .section {
+            scroll-margin-top: 8vh; /* same as header height */
+        }
+
+        .section:target {
+            outline: 3px solid #f59e0b;
+        }
+
+        .nav-item:focus {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .header > * {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            color: #333;
+            font-size: 2.2vh;
+            height: auto;
+        }
+
+        .cloud {
+            scale: 0.8;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
 
 
-      <main class="text-content">
-        <h1>About Me</h1>
-      </main>
-    </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
-</html>
+        .sidebar {
+            margin-left: 5vw;
+            flex: 1;
+            background: white;
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
 
-<style lang="sass">
-  :root {
-    font-family: Garamond, serif;
-  }
 
-  #navbar {
-    display: flex;
-    background-color: aquamarine;
-    justify-content: center;
-  }
+        .profile-section {
+            margin-bottom: 1vh;
+            padding-top: 2vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            align-self: stretch;
+        }
 
-  body {
-    margin: 0;
-    min-width: 320px;
-    min-height: 100vh;
-  }
+        .profile-avatar {
+            width: 60%;
+            border-radius: 50%;
+            margin: 1vh 1vh;
+        }
 
-  #app {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
+        .profile-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
 
-  #profile-bar {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background-color: burlywood;
-    width: 20vw;
-  }
+        .profile-title {
+            color: #666;
+            font-size: 14px;
+        }
 
-  #profile-pic {
-    border-radius: 50%;
-    width: 60%;
-    object-fit: cover;
-  }
+        .nav-menu {
+            margin-bottom: 4vh;
+        }
 
-  #main-content{
-    background-color: cornsilk;
-    display: flex;
-    flex-direction: row;
-  }
-</style>
+        .nav-item {
+            padding: 8px 0;
+            color: #666;
+            cursor: pointer;
+            display: block;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        .nav-item.active {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            color: #333;
+            font-weight: 500;
+        /*    pill shape background */
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .social-section h4 {
+            /*Small ruler / line on the bottom but spanning only center 50%*/
+            border-bottom: 2px solid #e1e4e8;
+            font-size: .9em;
+            border-bottom-width: 1px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .social-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 14px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.2s ease;
+        }
+
+        .social-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            font-size: 14px;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.2s ease;
+        }
+
+        .social-item:hover {
+            color: #3b82f6;
+        }
+
+        .social-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .main-content {
+            flex: 2;
+            padding: 24px;
+            background: #f6f7f9;
+        }
+
+        .section {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .section h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+
+        .right-sidebar {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+
+        @media (max-width: 768px) {
+            .right-sidebar {
+                order: 1;
+                flex: 4;
+            }
+
+            .sidebar {
+                order: 0;
+                flex: 3;
+            }
+
+
+            .main-content {
+                order: 2;
+                flex-basis: 100%;
+            }
+        }
+
+        .bio-section {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .bio-section h4 {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .bio-text {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 16px;
+        }
+
+        .location {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .skills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .skill-tag {
+            background: #3b82f6;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+        }
+
+        .skill-tag.encryption {
+            background: #8b5cf6;
+        }
+
+        .skill-tag.web {
+            background: #f59e0b;
+        }
+
+        .time-info {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .time-display {
+            font-weight: 600;
+            color: #333;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+    </style>
+</head>
+<body>
+<header class="header">
+    <img class="cloud" src="public/logo.svg" alt="cloud image" />
+    <div class="logo">Ethan Gallant</div>
+</header>
+
+<div class="container">
+    <aside class="sidebar">
+        <div class="profile-section">
+            <img class="profile-avatar" src="public/me.webp" alt="Photo of me"/>
+            <div class="profile-name">Ethan Gallant</div>
+            <div class="profile-title">Maker, hacker &amp; certified chaos factory.</div>
+        </div>
+
+        <nav class="nav-menu">
+            <a class="nav-item active" href="#profile">Profile</a>
+            <a class="nav-item" href="#books">Books</a>
+            <a class="nav-item" href="github.com/ethan-gallant">Projects</a>
+            <a class="nav-item" href="https://blog.ethangallant.com">Blog</a>
+        </nav>
+
+        <div class="social-section">
+            <h4>Socials / Links</h4>
+
+            <a href="https://github.com/ethan-gallant" class="social-item" target="_blank">
+                <svg class="social-icon" viewBox="0 0 24 24">
+                    <path d="M12 0C5.374 0 0 5.373 0 12 0 17.302 3.438 21.8 8.207 23.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+            </a>
+
+            <a href="https://linkedin.com/in/ethan-gallant" class="social-item" target="_blank">
+                <svg class="social-icon" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                LinkedIn
+            </a>
+
+            <a href="mailto:ethan.gallant@gmail.com" class="social-item">
+                <svg class="social-icon" viewBox="0 0 24 24">
+                    <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h.273L12 12.092l10.091-8.271h.273c.904 0 1.636.732 1.636 1.636z"/>
+                </svg>
+                Email
+            </a>
+
+            <a href="https://search.arin.net/rdap/?query=CW-777" class="social-item" target="_blank">
+                <svg class="social-icon" viewBox="0 0 24 24">
+                    <path d="M16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2m-5.15 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56M14.34 14H9.66c-.1-.66-.16-1.32-.16-2 0-.68.06-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2M12 19.96c-.83-1.2-1.5-2.53-1.91-3.96h3.82c-.41 1.43-1.08 2.76-1.91 3.96M8 8H5.08C6.03 6.34 7.57 5.06 9.4 4.44 8.8 5.55 8.35 6.75 8 8m-2.92 8H8c.35 1.25.8 2.45 1.4 3.56-1.83-.63-3.37-1.91-4.32-3.56M2.26 14h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H2.26C2.1 17.36 2 16.69 2 16s.1-1.36.26-2m1.82-6h2.95c-.32-1.25-.78-2.45-1.38-3.56C3.69 5.07 2.16 6.34 1.21 8M12 4.03c.83 1.2 1.5 2.54 1.91 3.97h-3.82c.41-1.43 1.08-2.77 1.91-3.97M18.92 8h-2.95c.32-1.25.78-2.45 1.38-3.56 1.84.63 3.37 1.91 4.32 3.56M12 2C6.47 2 2 6.5 2 12A10 10 0 0 0 12 22a10 10 0 0 0 10-10A10 10 0 0 0 12 2z"/>
+                </svg>
+                ARIN Registry
+            </a>
+
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <section class="section" id="profile">
+            <h3>What do I do?</h3>
+
+            <p>I am a software developer with a passion for anything infrastructure. My career started out as a systems administrator, and
+                moved onto platform engineering and devops as I learnt the scale limitations of manual systems administration. Since then I've
+            </p>
+
+            <br>
+            <p>After learning the manual ropes of mainstream sysadmin tools like VMWare, Citrix, and basic Linux administration, I moved on to the world of automation and large scale deployments.
+                During that time I learnt more than the basic paradigms of software development, I learnt the importance of failover, automation, CI/CD and reliable consistent tests.
+            </p>
+
+
+            <br>
+            <p>I focus
+
+            <div class="info-card">
+                I suppose I'll put subsections at some point when I start giving a fuck less about CSS and give many more fucks about the content.
+                Not enough fucks to go around ¯\_(ツ)_/¯
+            </div>
+        </section>
+    </main>
+
+    <aside class="right-sidebar">
+        <div class="bio-section">
+            <h4>BIOGRAPHY</h4>
+            <div class="bio-text">
+                I carry with me an infinite supply of curiosity and creativity for innovative
+                technologies. Whether I'm building, breaking, or fixing, I channel my energy
+                into having a meaningful impact on the world. Everything has a cost and I strive to find
+                balance in everything I do. I believe that balance is the key to everything: having a meaningful life,
+                creating a successful product, fostering a happy team, and ensuring a sustainable future.
+            </div>
+            <div class="location">Nova Scotia, Canada 🍁</div>
+            <div class="skills">
+                <span class="skill-tag">Security</span>
+                <span class="skill-tag encryption">Kubernetes</span>
+                <span class="skill-tag web">Distributed Systems</span>
+            </div>
+        </div>
+
+        <div class="time-info">
+            <span>🕐</span>
+            <div>
+                <div class="time-display">69:420 AM NFGIST</div>
+                <div style="color: #666; font-size: 12px;">No fucks given island standard time</div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+</body>
